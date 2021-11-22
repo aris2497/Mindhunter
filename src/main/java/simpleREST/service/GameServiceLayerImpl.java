@@ -88,25 +88,24 @@ public class GameServiceLayerImpl implements GameServiceLayer {
         if(Arrays.equals(guesses,generatedNos)) // If contents of arrays are exact!
         {
             System.out.println("Both arrays are equal - Game over ");
-            isGameOver = true;
+            return "p:0e:4";
         }
-
-        if (!isGameOver)
-        {
-            for(int i = 0; i < guesses.length;i++) {
-                if (isInArray(guesses[i], generatedNos)) {
-                    System.out.println("The number " + guesses[i] + " is in the array");
-                    partial++;
-                }
-                if (guesses[i] == generatedNos[i]) {
-                    System.out.println("The number " + guesses[i] + " is an exact match");
-                    exact++;
-                    partial--;
-                }
-            }
-        } else if (guesses.length != 1) { //if the format was incorrect
+        if (guesses.length == 1) { //if the format was incorrect
             System.out.println("Try again");
             return null;
+        }
+
+
+        for(int i = 0; i < guesses.length;i++) {
+            if (isInArray(guesses[i], generatedNos)) {
+                System.out.println("The number " + guesses[i] + " is in the array");
+                partial++;
+            }
+            if (guesses[i] == generatedNos[i]) {
+                System.out.println("The number " + guesses[i] + " is an exact match");
+                exact++;
+                partial--;
+            }
         }
 
         return "p:" +partial+ "e:" +exact;

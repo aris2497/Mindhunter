@@ -9,12 +9,21 @@ public class Game {
     private int gameId;
     private String state = "inProgress";
     private String timeStarted = "0:0:0";
-    private List<Guess> guesses;
     private int noOfGuesses = 0;
     private String answer = "8234";
 
     public Game(){
-        this.guesses = new ArrayList<Guess>();
+    }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "gameId=" + gameId +
+                ", state='" + state + '\'' +
+                ", timeStarted='" + timeStarted + '\'' +
+                ", noOfGuesses=" + noOfGuesses +
+                ", answer='" + answer + '\'' +
+                '}';
     }
 
     public int getGameId() {
@@ -25,7 +34,7 @@ public class Game {
         this.gameId = gameId;
     }
 
-    public List<Guess> getGuesses() {
+   /* public List<Guess> getGuesses() {
         return guesses;
     }
     public void setGuesses(List<Guess> guesses) {
@@ -36,7 +45,7 @@ public class Game {
         Guess a = new Guess();
         a.setGuessValue(values);
         this.guesses.add(a);
-    }
+    }*/
 
     public String getTimeStarted() {
         return timeStarted;

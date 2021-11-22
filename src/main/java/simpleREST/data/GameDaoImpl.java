@@ -47,8 +47,9 @@ public class GameDaoImpl implements GameDao {
 
         return game;
     }
+
     public Guess addGuess(Guess guess){
-        final String sql = "INSERT INTO guess(result, time, gameId) VALUES(?,?,?);";
+        final String sql = "INSERT INTO guess(result, time, value, gameId) VALUES(?,?,?,?);";
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbcTemplate.update((Connection conn) -> {
@@ -57,13 +58,14 @@ public class GameDaoImpl implements GameDao {
                     sql,
                     Statement.RETURN_GENERATED_KEYS);
 
-
             statement.setString(1, guess.getResult());
-            statement.setString(2, guess.getTime());
-            statement.setInt(3, guess.getGameId());
+            statement.setString(3, guess.getGuessValue());
+            statement.setTimestamp(2, guess.getTime());
+            statement.setInt(4, guess.getGameId());
             return statement;
 
         }, keyHolder);
+
 
         guess.setGuessNo(keyHolder.getKey().intValue());
 
@@ -78,7 +80,7 @@ public class GameDaoImpl implements GameDao {
 
     @Override
     public List<Guess> getAllGuesses() {
-        final String sql = "SELECT id, result, time, gameId FROM guess;";
+        final String sql = "SELECT id, result, value, time, gameId FROM guess;";
         return jdbcTemplate.query(sql, new GuessMapper());
     }
 
@@ -128,6 +130,7 @@ public class GameDaoImpl implements GameDao {
         public Game mapRow(ResultSet rs, int index) throws SQLException {
             Game gm = new Game();
             gm.setGameId(rs.getInt("id"));
+            gm.setState(rs.getString("state"));
             gm.setTimeStarted(rs.getString("timeStarted"));
             gm.setNoOfGuesses(rs.getInt("noOfGuesses"));
             gm.setAnswer(rs.getString("answer"));
@@ -141,7 +144,8 @@ public class GameDaoImpl implements GameDao {
             Guess guess = new Guess();
             guess.setGuessNo(rs.getInt("id"));
             guess.setResult(rs.getString("result"));
-            guess.setTime(rs.getString("time"));
+            guess.setGuessValue(rs.getString("value"));
+            guess.setTime(rs.getTimestamp("time"));
             guess.setGameId(rs.getInt("gameId"));
             return guess;
         }

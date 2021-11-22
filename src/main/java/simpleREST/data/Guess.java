@@ -1,36 +1,30 @@
 package simpleREST.data;
 
+import java.sql.Timestamp;
+
 public class Guess {
+
 
 
     private int gameId;
     private int guessNo;
-    private String guessValues;
+    private String guessValue;
     private String result;
-    private String time;
+
+
+    private Timestamp time;
     private int totalGuesses;
 
 
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
     public Guess() {
-        this.guessNo = ++totalGuesses;
-//        for(int i =0; i < guessValue.length; i++){
-//            guessValue[i] = guesses[i];
-//        }
+        this.time = new Timestamp(System.currentTimeMillis());
     }
 
     @Override
     public String toString() {
         return "Guess{" +
                 "guessNo=" + guessNo +
-                ", guessValues='" + guessValues + '\'' +
+                ", guessValues='" + guessValue + '\'' +
                 ", result='" + result + '\'' +
                 '}';
     }
@@ -42,13 +36,15 @@ public class Guess {
     public void setGuessNo(int guessNo) {
         this.guessNo = guessNo;
     }
+
     public String getGuessValue() {
-        return guessValues;
+        return guessValue;
     }
 
     public void setGuessValue(String guessValue) {
-        this.guessValues = guessValue;
+        this.guessValue = guessValue;
     }
+
     public String getResult() {
         return result;
     }
@@ -56,12 +52,21 @@ public class Guess {
     public void setResult(String result) {
         this.result = result;
     }
+
     public int getGameId() {
         return gameId;
     }
 
     public void setGameId(int gameId) {
         this.gameId = gameId;
+    }
+
+    public Timestamp getTime() {
+        return time;
+    }
+
+    public void setTime(Timestamp time) {
+        this.time = time;
     }
 
 
